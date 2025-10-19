@@ -95,12 +95,9 @@ def rate(request, id):
     if value is None or value < 1 or value > 5:
         return redirect('movies.show', id=id)
 
-    # Upsert per (movie, user)
     Rating.objects.update_or_create(
         movie=movie,
         user=request.user,
         defaults={'value': value}
     )
-
-    # Redirect back so the page re-renders with updated averages
     return redirect('movies.show', id=id)
